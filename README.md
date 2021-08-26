@@ -38,12 +38,14 @@ Number_of_counties: 104
 
 3) To determine which store ordered the highest number of liquor bottles along with its vendor
 ```sql
+# Using CTE
 with max_value as 
 (select
     max(bottles_sold) as bottles_sold
 from 
     `bigquery-public-data.iowa_liquor_sales.sales`)
 
+# Using Inner Join
 select 
     date, store_number, store_name, address, city, zip_code, county_number, county, category_name, vendor_name, item_description, a.bottles_sold as bottles_ordered
 from 
@@ -60,12 +62,14 @@ Answer:
 
 To determine which store ordered the least number of liquor bottles along with its vendor
 ```sql
+# Using CTE
 with min_value as 
 (select
     min(bottles_sold) as bottles_sold
 from 
     `bigquery-public-data.iowa_liquor_sales.sales`)
 
+# Using Inner Join
 select 
     store_number, store_name, address, city, zip_code, county, category_name, vendor_name, item_description, h.bottles_sold as bottles_ordered
 from 
