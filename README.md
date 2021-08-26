@@ -36,7 +36,26 @@ Number_of_cities: 456
 Number_of_counties: 104
 
 
-#### Q3) To determine which store has ordered the highest number of liquor bottles 
+#### Q3) Number of stores in each county
+```sql
+select 
+    county_number, lower(county) as county, count(distinct(store_number)) as number_of_stores 
+from 
+    `bigquery-public-data.iowa_liquor_sales.sales` 
+where 
+    county_number is NOT Null and
+    store_number is NOT Null
+group by 
+    county_number, county 
+order by 
+    number_of_stores desc
+```
+
+#### Answer:
+![image](https://user-images.githubusercontent.com/87647771/130948547-ed47267f-b885-40de-8515-d83b1185bf93.png)
+
+
+#### Q4) To determine which store has ordered the highest number of liquor bottles 
 ```sql
 # Using CTE
 with max_value as 
@@ -61,47 +80,60 @@ on
 ![image](https://user-images.githubusercontent.com/87647771/130853552-64297824-9fcf-4251-b241-0d975a8c48e5.png)
 
 
-To determine which store has ordered the least number of liquor bottles 
+#### To determine which store has ordered the least number of liquor bottles 
 ```sql
-# Using CTE
-with min_value as 
-(select
-    min(bottles_sold) as bottles_sold
-from 
-    `bigquery-public-data.iowa_liquor_sales.sales`)
-
-# Using Inner Join
-select 
-    store_number, store_name, address, city, zip_code, county, category_name, 
-    vendor_name, item_description, h.bottles_sold as bottles_ordered
-from 
-    `bigquery-public-data.iowa_liquor_sales.sales` g
-inner join 
-    min_value h 
-on 
-    g.bottles_sold = h.bottles_sold 
-order by 
-    store_number
+# Using Sub-query
+SELECT
+  store_number, store_name, address, city, zip_code, county,
+  category_name, vendor_name, item_description, bottles_sold AS bottles_ordered
+FROM
+  `bigquery-public-data.iowa_liquor_sales.sales`
+WHERE
+  bottles_sold IN (
+  SELECT
+    bottles_sold
+  FROM
+    `bigquery-public-data.iowa_liquor_sales.sales`
+  ORDER BY
+    bottles_sold
+  LIMIT
+    10)
+ORDER BY
+  store_number
 ```
 
 #### Answer:
 ![image](https://user-images.githubusercontent.com/87647771/130854653-d7f56f07-564c-487d-9c5f-eab5d611ee2a.png)
 
 
-#### Q4) Number of stores in each county
+#### Q5) Which county spent the most for liquor
 ```sql
-select 
-    county_number, lower(county) as county, count(distinct(store_number)) as number_of_stores 
-from 
-    `bigquery-public-data.iowa_liquor_sales.sales` 
-where 
-    county_number is NOT Null 
-group by 
-    county_number, county 
-order by 
-    number_of_stores desc
+# Using CTE
+WITH
+  highest_cost AS (
+  SELECT
+    sale_dollars
+  FROM
+    `bigquery-public-data.iowa_liquor_sales.sales`
+  ORDER BY
+    sale_dollars DESC
+  LIMIT
+    50) 
+
+# Using Inner Join
+SELECT
+  a.county_number, LOWER(a.county) AS county, SUM(b.sale_dollars) AS highest_cost
+FROM
+  `bigquery-public-data.iowa_liquor_sales.sales` a
+INNER JOIN
+  highest_cost b
+ON
+  b.sale_dollars = a.sale_dollars
+GROUP BY
+  a.county_number, county
+ORDER BY
+  highest_cost DESC
 ```
 
 #### Answer:
-![image](https://user-images.githubusercontent.com/87647771/130948547-ed47267f-b885-40de-8515-d83b1185bf93.png)
-
+![image](https://user-images.githubusercontent.com/87647771/130987251-40784cea-eaf5-45b3-b402-b16189a4b81c.png)
