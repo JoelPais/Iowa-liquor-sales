@@ -1,5 +1,5 @@
 # Iowa-liquor-sales
-## Analysis of Iowa liquor sales
+## Analysis of liquor sales in the state of Iowa
 
 ### Executive Summary
 
