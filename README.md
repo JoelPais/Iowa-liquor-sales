@@ -106,7 +106,7 @@ ORDER BY
 ![image](https://user-images.githubusercontent.com/87647771/130854653-d7f56f07-564c-487d-9c5f-eab5d611ee2a.png)
 
 
-#### Q5) Which county has spent the most for liquor
+#### Q5) Which county has spent the most on liquor
 ```sql
 # Using CTE
 WITH
