@@ -1,8 +1,6 @@
 # Iowa-liquor-sales
 ## Analysis of liquor sales in the state of Iowa
 
-### Executive Summary
-
 #### Q1) When was the earliest and latest date for the purchase of liquor?
 ```sql
 select 
