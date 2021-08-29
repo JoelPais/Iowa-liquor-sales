@@ -1,6 +1,7 @@
 # Iowa-liquor-sales
 ## Analysis of liquor sales in the state of Iowa
 
+
 #### Q1) When was the earliest and latest date for the purchase of liquor?
 ```sql
 select 
@@ -13,6 +14,7 @@ limit 10
 #### Answer:
 initial_date: 2012-01-03
 latest_date	: 2020-11-30	
+
 
 
 #### Q2) From how many stores, cities and counties is the liquor order coming from 
@@ -34,6 +36,7 @@ Number_of_cities: 456
 Number_of_counties: 104
 
 
+
 #### Q3) Number of stores in each county
 ```sql
 select 
@@ -51,6 +54,7 @@ order by
 
 #### Answer:
 ![image](https://user-images.githubusercontent.com/87647771/130948547-ed47267f-b885-40de-8515-d83b1185bf93.png)
+
 
 
 #### Q4) To determine which store has ordered the highest number of liquor bottles 
@@ -78,6 +82,7 @@ on
 ![image](https://user-images.githubusercontent.com/87647771/130853552-64297824-9fcf-4251-b241-0d975a8c48e5.png)
 
 
+
 #### To determine which store has ordered the least number of liquor bottles 
 ```sql
 # Using Sub-query
@@ -102,6 +107,7 @@ ORDER BY
 
 #### Answer:
 ![image](https://user-images.githubusercontent.com/87647771/130854653-d7f56f07-564c-487d-9c5f-eab5d611ee2a.png)
+
 
 
 #### Q5) Which county has spent the most on liquor
